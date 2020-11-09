@@ -1,0 +1,53 @@
+﻿@model IEnumerable<pocketgym.Models.UserWorkout>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Exercis.ExerciseDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserInfo.Username)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exercis.ExerciseDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserInfo.Username)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.WorkoutID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.WorkoutID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.WorkoutID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

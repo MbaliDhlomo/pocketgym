@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PocketGymsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" />
+          <Property Name="Comment" Type="varchar" MaxLength="115" Nullable="false" />
+          <Property Name="InstructorID" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Exercises">
+          <Key>
+            <PropertyRef Name="ExerciseID" />
+          </Key>
+          <Property Name="ExerciseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExerciseDescription" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="ExerciseDuration" Type="int" Nullable="false" />
+          <Property Name="Reps" Type="int" Nullable="false" />
+          <Property Name="InstructorID" Type="int" />
+          <Property Name="ExerciseType" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="InstructorTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="InstructorType">
+          <Key>
+            <PropertyRef Name="InstructorTypeID" />
+          </Key>
+          <Property Name="InstructorTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeDesc" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostContent" Type="varchar" MaxLength="115" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="InstructorID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Weight" Type="int" />
+        </EntityType>
+        <EntityType Name="UserWorkout">
+          <Key>
+            <PropertyRef Name="WorkoutID" />
+          </Key>
+          <Property Name="WorkoutID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCompleted" Type="datetime" Nullable="false" />
+          <Property Name="ExerciseID" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Comment__Instruc__22AA2996">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__PostID__21B6055D">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__UserID__239E4DCF">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exercises__Instr__173876EA">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Exercises" Type="Self.Exercises" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Exercises">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Instructo__Instr__145C0A3F">
+          <End Role="InstructorType" Type="Self.InstructorType" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstructorType">
+              <PropertyRef Name="InstructorTypeID" />
+            </Principal>
+            <Dependent Role="Instructor">
+              <PropertyRef Name="InstructorTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__Instructor__1ED998B2">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__UserID__1DE57479">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserWorko__Exerc__1A14E395">
+          <End Role="Exercises" Type="Self.Exercises" Multiplicity="0..1" />
+          <End Role="UserWorkout" Type="Self.UserWorkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercises">
+              <PropertyRef Name="ExerciseID" />
+            </Principal>
+            <Dependent Role="UserWorkout">
+              <PropertyRef Name="ExerciseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserWorko__UserI__1B0907CE">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="UserWorkout" Type="Self.UserWorkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserWorkout">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PocketGymsModelStoreContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exercises" EntityType="Self.Exercises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Instructor" EntityType="Self.Instructor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstructorType" EntityType="Self.InstructorType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserWorkout" EntityType="Self.UserWorkout" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Comment__Instruc__22AA2996" Association="Self.FK__Comment__Instruc__22AA2996">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__PostID__21B6055D" Association="Self.FK__Comment__PostID__21B6055D">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__UserID__239E4DCF" Association="Self.FK__Comment__UserID__239E4DCF">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exercises__Instr__173876EA" Association="Self.FK__Exercises__Instr__173876EA">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Exercises" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Instructo__Instr__145C0A3F" Association="Self.FK__Instructo__Instr__145C0A3F">
+            <End Role="InstructorType" EntitySet="InstructorType" />
+            <End Role="Instructor" EntitySet="Instructor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__Instructor__1ED998B2" Association="Self.FK__Post__Instructor__1ED998B2">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__UserID__1DE57479" Association="Self.FK__Post__UserID__1DE57479">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserWorko__Exerc__1A14E395" Association="Self.FK__UserWorko__Exerc__1A14E395">
+            <End Role="Exercises" EntitySet="Exercises" />
+            <End Role="UserWorkout" EntitySet="UserWorkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserWorko__UserI__1B0907CE" Association="Self.FK__UserWorko__UserI__1B0907CE">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="UserWorkout" EntitySet="UserWorkout" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PocketGymsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" />
+          <Property Name="Comment1" Type="String" MaxLength="115" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InstructorID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Instructor" Relationship="Self.FK__Comment__Instruc__22AA2996" FromRole="Comment" ToRole="Instructor" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__Comment__PostID__21B6055D" FromRole="Comment" ToRole="Post" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__Comment__UserID__239E4DCF" FromRole="Comment" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="Exercis">
+          <Key>
+            <PropertyRef Name="ExerciseID" />
+          </Key>
+          <Property Name="ExerciseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExerciseDescription" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExerciseDuration" Type="Int32" Nullable="false" />
+          <Property Name="Reps" Type="Int32" Nullable="false" />
+          <Property Name="InstructorID" Type="Int32" />
+          <Property Name="ExerciseType" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Instructor" Relationship="Self.FK__Exercises__Instr__173876EA" FromRole="Exercises" ToRole="Instructor" />
+          <NavigationProperty Name="UserWorkouts" Relationship="Self.FK__UserWorko__Exerc__1A14E395" FromRole="Exercises" ToRole="UserWorkout" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InstructorTypeID" Type="Int32" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__Instruc__22AA2996" FromRole="Instructor" ToRole="Comment" />
+          <NavigationProperty Name="Exercises" Relationship="Self.FK__Exercises__Instr__173876EA" FromRole="Instructor" ToRole="Exercises" />
+          <NavigationProperty Name="InstructorType" Relationship="Self.FK__Instructo__Instr__145C0A3F" FromRole="Instructor" ToRole="InstructorType" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK__Post__Instructor__1ED998B2" FromRole="Instructor" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="InstructorType">
+          <Key>
+            <PropertyRef Name="InstructorTypeID" />
+          </Key>
+          <Property Name="InstructorTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeDesc" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Instructors" Relationship="Self.FK__Instructo__Instr__145C0A3F" FromRole="InstructorType" ToRole="Instructor" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostContent" Type="String" MaxLength="115" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="InstructorID" Type="Int32" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__PostID__21B6055D" FromRole="Post" ToRole="Comment" />
+          <NavigationProperty Name="Instructor" Relationship="Self.FK__Post__Instructor__1ED998B2" FromRole="Post" ToRole="Instructor" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__Post__UserID__1DE57479" FromRole="Post" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Weight" Type="Int32" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__UserID__239E4DCF" FromRole="UserInfo" ToRole="Comment" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK__Post__UserID__1DE57479" FromRole="UserInfo" ToRole="Post" />
+          <NavigationProperty Name="UserWorkouts" Relationship="Self.FK__UserWorko__UserI__1B0907CE" FromRole="UserInfo" ToRole="UserWorkout" />
+        </EntityType>
+        <EntityType Name="UserWorkout">
+          <Key>
+            <PropertyRef Name="WorkoutID" />
+          </Key>
+          <Property Name="WorkoutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCompleted" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExerciseID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Exercis" Relationship="Self.FK__UserWorko__Exerc__1A14E395" FromRole="UserWorkout" ToRole="Exercises" />
+          <NavigationProperty Name="UserInfo" Relationship="Self.FK__UserWorko__UserI__1B0907CE" FromRole="UserWorkout" ToRole="UserInfo" />
+        </EntityType>
+        <Association Name="FK__Comment__Instruc__22AA2996">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__PostID__21B6055D">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__UserID__239E4DCF">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exercises__Instr__173876EA">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Exercises" Type="Self.Exercis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Exercises">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserWorko__Exerc__1A14E395">
+          <End Role="Exercises" Type="Self.Exercis" Multiplicity="0..1" />
+          <End Role="UserWorkout" Type="Self.UserWorkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercises">
+              <PropertyRef Name="ExerciseID" />
+            </Principal>
+            <Dependent Role="UserWorkout">
+              <PropertyRef Name="ExerciseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Instructo__Instr__145C0A3F">
+          <End Role="InstructorType" Type="Self.InstructorType" Multiplicity="0..1" />
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstructorType">
+              <PropertyRef Name="InstructorTypeID" />
+            </Principal>
+            <Dependent Role="Instructor">
+              <PropertyRef Name="InstructorTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__Instructor__1ED998B2">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__UserID__1DE57479">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserWorko__UserI__1B0907CE">
+          <End Role="UserInfo" Type="Self.UserInfo" Multiplicity="0..1" />
+          <End Role="UserWorkout" Type="Self.UserWorkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfo">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserWorkout">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PocketGymsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Exercises" EntityType="Self.Exercis" />
+          <EntitySet Name="Instructors" EntityType="Self.Instructor" />
+          <EntitySet Name="InstructorTypes" EntityType="Self.InstructorType" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="UserInfoes" EntityType="Self.UserInfo" />
+          <EntitySet Name="UserWorkouts" EntityType="Self.UserWorkout" />
+          <AssociationSet Name="FK__Comment__Instruc__22AA2996" Association="Self.FK__Comment__Instruc__22AA2996">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__PostID__21B6055D" Association="Self.FK__Comment__PostID__21B6055D">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__UserID__239E4DCF" Association="Self.FK__Comment__UserID__239E4DCF">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exercises__Instr__173876EA" Association="Self.FK__Exercises__Instr__173876EA">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="Exercises" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserWorko__Exerc__1A14E395" Association="Self.FK__UserWorko__Exerc__1A14E395">
+            <End Role="Exercises" EntitySet="Exercises" />
+            <End Role="UserWorkout" EntitySet="UserWorkouts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Instructo__Instr__145C0A3F" Association="Self.FK__Instructo__Instr__145C0A3F">
+            <End Role="InstructorType" EntitySet="InstructorTypes" />
+            <End Role="Instructor" EntitySet="Instructors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__Instructor__1ED998B2" Association="Self.FK__Post__Instructor__1ED998B2">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__UserID__1DE57479" Association="Self.FK__Post__UserID__1DE57479">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserWorko__UserI__1B0907CE" Association="Self.FK__UserWorko__UserI__1B0907CE">
+            <End Role="UserInfo" EntitySet="UserInfoes" />
+            <End Role="UserWorkout" EntitySet="UserWorkouts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PocketGymsModelStoreContainer" CdmEntityContainer="PocketGymsEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="PocketGymsModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="Comment1" ColumnName="Comment" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exercises">
+            <EntityTypeMapping TypeName="PocketGymsModel.Exercis">
+              <MappingFragment StoreEntitySet="Exercises">
+                <ScalarProperty Name="ExerciseID" ColumnName="ExerciseID" />
+                <ScalarProperty Name="ExerciseDescription" ColumnName="ExerciseDescription" />
+                <ScalarProperty Name="ExerciseDuration" ColumnName="ExerciseDuration" />
+                <ScalarProperty Name="Reps" ColumnName="Reps" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="ExerciseType" ColumnName="ExerciseType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instructors">
+            <EntityTypeMapping TypeName="PocketGymsModel.Instructor">
+              <MappingFragment StoreEntitySet="Instructor">
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="InstructorTypeID" ColumnName="InstructorTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstructorTypes">
+            <EntityTypeMapping TypeName="PocketGymsModel.InstructorType">
+              <MappingFragment StoreEntitySet="InstructorType">
+                <ScalarProperty Name="InstructorTypeID" ColumnName="InstructorTypeID" />
+                <ScalarProperty Name="TypeDesc" ColumnName="TypeDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="PocketGymsModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="PostContent" ColumnName="PostContent" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfoes">
+            <EntityTypeMapping TypeName="PocketGymsModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserWorkouts">
+            <EntityTypeMapping TypeName="PocketGymsModel.UserWorkout">
+              <MappingFragment StoreEntitySet="UserWorkout">
+                <ScalarProperty Name="WorkoutID" ColumnName="WorkoutID" />
+                <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+                <ScalarProperty Name="ExerciseID" ColumnName="ExerciseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

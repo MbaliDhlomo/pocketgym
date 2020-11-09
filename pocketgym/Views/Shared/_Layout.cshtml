@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link href="~/assets/css/Login-Form-Clean.css" rel="stylesheet" />
+    <link href="~/assets/css/Login-Form-Dark.css" rel="stylesheet" />
+    <link href="~/assets/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="~/assets/fonts/font-awesome.min.css">
+    <link href="~/assets/fonts/simple-line-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link href="~/assets/css/Registration-Form-with-Photo.css" rel="stylesheet" />
+    <link href="~/assets/css/smoothproducts.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container">
+            <a class="navbar-brand logo" href="#" style="font-family: Audiowide, cursive;">Pocket Gym </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" style="font-family: Audiowide, cursive;" @Html.ActionLink("Register Client", "Register", "User")</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" style="font-family: Audiowide, cursive;" @Html.ActionLink("Create Workout Plan", "Register", "User")</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" style="font-family: Audiowide, cursive;" @Html.ActionLink("Progress", "Activity", "Activity")</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div>
+        @RenderBody()
+    </div>
+
+</body>
+
+</html>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src="assets/js/smoothproducts.min.js"></script>
+<script src="assets/js/theme.js"></script>
